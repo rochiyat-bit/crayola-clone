@@ -121,7 +121,34 @@ NODE_ENV=development
 
 **Important:** For production, use a dedicated Mega.io account with sufficient storage.
 
-### 6. Run Development Server
+### 6. Initialize Database
+
+Run migrations to create all tables:
+
+```bash
+npm run db:migrate
+```
+
+Seed demo data (users, categories, products, activities):
+
+```bash
+npm run db:seed
+```
+
+Or run both at once:
+
+```bash
+npm run db:setup
+```
+
+**Demo Login Credentials:**
+- Admin: `admin@crayola-store.com` / `Admin123!@#`
+- Editor: `editor@crayola-store.com` / `Admin123!@#`
+- Customer: `customer@example.com` / `Admin123!@#`
+
+📚 **For detailed migration guide, see [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)**
+
+### 7. Run Development Server
 
 ```bash
 npm run dev
@@ -205,16 +232,63 @@ POST   /api/media/upload          # Upload file to Mega.io
 GET    /api/media/upload          # List uploaded files
 ```
 
+## 💾 Database Commands
+
+### Migrations
+
+```bash
+# Run all pending migrations
+npm run db:migrate
+
+# Undo last migration
+npm run db:migrate:undo
+
+# Undo all migrations
+npm run db:migrate:undo:all
+```
+
+### Seeders
+
+```bash
+# Seed demo data
+npm run db:seed
+
+# Remove seeded data
+npm run db:seed:undo
+```
+
+### Reset Database
+
+```bash
+# Drop all tables, recreate, and reseed (⚠️ Deletes all data!)
+npm run db:reset
+
+# Setup fresh database (migrate + seed)
+npm run db:setup
+```
+
+### Demo Data Included
+
+- **3 Users**: Super Admin, Editor, Customer
+- **11 Categories**: Crayons, Markers, Paints, etc. (with sub-categories)
+- **7 Products**: Sample Crayola products with pricing and stock
+- **3 Activities**: Creative tutorials with step-by-step instructions
+
+📚 **Full migration documentation**: [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
+
 ## 🎯 Current Implementation Status
 
 ✅ **Completed:**
 - Project setup with Next.js 14 and TypeScript
 - Database models with Sequelize ORM
+- **Database migrations (12 tables)**
+- **Database seeders with demo data**
 - Mega.io cloud storage integration
 - API routes for products, categories, and media
 - Zod validation schemas
 - Shopping cart with Zustand
 - Environment configuration
+- Comprehensive migration guide
 
 🚧 **In Progress:**
 - NextAuth.js authentication

@@ -1,0 +1,58 @@
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('users', {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      role: {
+        type: Sequelize.ENUM('super_admin', 'admin', 'editor', 'customer'),
+        defaultValue: 'customer',
+      },
+      avatar: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      emailVerified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        field: 'email_verified',
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        field: 'created_at',
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        field: 'updated_at',
+      },
+    });
+
+    // Add indexes
+    await queryInterface.addIndex('users', ['email']);
+    await queryInterface.addIndex('users', ['role']);
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('users');
+  }
+};
